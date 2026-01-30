@@ -2,7 +2,7 @@
 
 **The ultimate memory system for AI agents.** Never lose context again.
 
-Combines 6 proven memory approaches into one bulletproof architecture:
+Combines 7 proven memory approaches into one bulletproof architecture:
 
 - ✅ **Bulletproof WAL Protocol** — Write-ahead logging survives compaction
 - ✅ **LanceDB Vector Search** — Semantic recall of relevant memories
@@ -10,6 +10,7 @@ Combines 6 proven memory approaches into one bulletproof architecture:
 - ✅ **File-Based Archives** — Human-readable MEMORY.md + daily logs
 - ✅ **Cloud Backup** — Optional SuperMemory sync
 - ✅ **Memory Hygiene** — Keep vectors lean, prevent token waste
+- ✅ **Mem0 Auto-Extraction** — Automatic fact extraction, 80% token reduction
 
 ## Quick Start
 
@@ -65,6 +66,35 @@ Agent (internal):
 ```
 
 If you respond first and crash before saving, context is lost. WAL ensures durability.
+
+## Why Memory Fails (And How to Fix It)
+
+| Problem | Cause | Fix |
+|---------|-------|-----|
+| Forgets everything | memory_search disabled | Enable + add OpenAI key |
+| Repeats mistakes | Lessons not logged | Write to memory/lessons.md |
+| Sub-agents isolated | No context inheritance | Pass context in task prompt |
+| Facts not captured | No auto-extraction | Use Mem0 (see below) |
+
+## Mem0 Integration (Recommended)
+
+Auto-extract facts from conversations. 80% token reduction.
+
+```bash
+npm install mem0ai
+export MEM0_API_KEY="your-key"
+```
+
+```javascript
+const { MemoryClient } = require('mem0ai');
+const client = new MemoryClient({ apiKey: process.env.MEM0_API_KEY });
+
+// Auto-extracts facts from messages
+await client.add(messages, { user_id: "user123" });
+
+// Retrieve relevant memories  
+const memories = await client.search(query, { user_id: "user123" });
+```
 
 ## For Clawdbot/Moltbot Users
 

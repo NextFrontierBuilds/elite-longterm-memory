@@ -1,6 +1,6 @@
 ---
 name: elite-longterm-memory
-version: 1.0.0
+version: 1.1.0
 description: "Ultimate AI agent memory system. Combines bulletproof WAL protocol, vector search, git-based knowledge graphs, cloud backup, and maintenance hygiene. Never lose context again. For Clawdbot, Moltbot, Claude, GPT agents."
 author: NextFrontierBuilds
 keywords: [memory, ai-agent, long-term-memory, vector-search, lancedb, git-notes, wal, persistent-context, claude, gpt, clawdbot, moltbot]
@@ -127,6 +127,33 @@ export SUPERMEMORY_API_KEY="your-key"
 supermemory add "Important context"
 supermemory search "what did we decide about..."
 ```
+
+### Layer 6: AUTO-EXTRACTION (Mem0) — Recommended
+**NEW: Automatic fact extraction**
+
+Mem0 automatically extracts facts from conversations. 80% token reduction.
+
+```bash
+npm install mem0ai
+export MEM0_API_KEY="your-key"
+```
+
+```javascript
+const { MemoryClient } = require('mem0ai');
+const client = new MemoryClient({ apiKey: process.env.MEM0_API_KEY });
+
+// Conversations auto-extract facts
+await client.add(messages, { user_id: "user123" });
+
+// Retrieve relevant memories
+const memories = await client.search(query, { user_id: "user123" });
+```
+
+Benefits:
+- Auto-extracts preferences, decisions, facts
+- Deduplicates and updates existing memories
+- 80% reduction in tokens vs raw history
+- Works across sessions automatically
 
 ## Quick Setup
 
@@ -275,6 +302,80 @@ wc -l MEMORY.md
 ls -la memory/
 ```
 
+## Why Memory Fails
+
+Understanding the root causes helps you fix them:
+
+| Failure Mode | Cause | Fix |
+|--------------|-------|-----|
+| Forgets everything | `memory_search` disabled | Enable + add OpenAI key |
+| Files not loaded | Agent skips reading memory | Add to AGENTS.md rules |
+| Facts not captured | No auto-extraction | Use Mem0 or manual logging |
+| Sub-agents isolated | Don't inherit context | Pass context in task prompt |
+| Repeats mistakes | Lessons not logged | Write to memory/lessons.md |
+
+## Solutions (Ranked by Effort)
+
+### 1. Quick Win: Enable memory_search
+
+If you have an OpenAI key, enable semantic search:
+
+```bash
+clawdbot configure --section web
+```
+
+This enables vector search over MEMORY.md + memory/*.md files.
+
+### 2. Recommended: Mem0 Integration
+
+Auto-extract facts from conversations. 80% token reduction.
+
+```bash
+npm install mem0ai
+```
+
+```javascript
+const { MemoryClient } = require('mem0ai');
+
+const client = new MemoryClient({ apiKey: process.env.MEM0_API_KEY });
+
+// Auto-extract and store
+await client.add([
+  { role: "user", content: "I prefer Tailwind over vanilla CSS" }
+], { user_id: "ty" });
+
+// Retrieve relevant memories
+const memories = await client.search("CSS preferences", { user_id: "ty" });
+```
+
+### 3. Better File Structure (No Dependencies)
+
+```
+memory/
+├── projects/
+│   ├── strykr.md
+│   └── taska.md
+├── people/
+│   └── contacts.md
+├── decisions/
+│   └── 2026-01.md
+├── lessons/
+│   └── mistakes.md
+└── preferences.md
+```
+
+Keep MEMORY.md as a summary (<5KB), link to detailed files.
+
+## Immediate Fixes Checklist
+
+| Problem | Fix |
+|---------|-----|
+| Forgets preferences | Add `## Preferences` section to MEMORY.md |
+| Repeats mistakes | Log every mistake to `memory/lessons.md` |
+| Sub-agents lack context | Include key context in spawn task prompt |
+| Forgets recent work | Strict daily file discipline |
+| Memory search not working | Check `OPENAI_API_KEY` is set |
+
 ## Troubleshooting
 
 **Agent keeps forgetting mid-conversation:**
@@ -288,6 +389,10 @@ ls -la memory/
 
 **Git-Notes not persisting:**
 → Run `git notes push` to sync with remote.
+
+**memory_search returns nothing:**
+→ Check OpenAI API key: `echo $OPENAI_API_KEY`
+→ Verify memorySearch enabled in clawdbot.json
 
 ---
 
