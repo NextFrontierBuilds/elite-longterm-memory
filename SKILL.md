@@ -1,6 +1,6 @@
 ---
 name: elite-longterm-memory
-version: 1.1.0
+version: 1.2.0
 description: "Ultimate AI agent memory system. Combines bulletproof WAL protocol, vector search, git-based knowledge graphs, cloud backup, and maintenance hygiene. Never lose context again. For Clawdbot, Moltbot, Claude, GPT agents."
 author: NextFrontierBuilds
 keywords: [memory, ai-agent, long-term-memory, vector-search, lancedb, git-notes, wal, persistent-context, claude, gpt, clawdbot, moltbot]

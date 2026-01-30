@@ -2,6 +2,27 @@
 
 **The ultimate memory system for AI agents.** Never lose context again.
 
+[![npm version](https://img.shields.io/npm/v/elite-longterm-memory.svg?style=flat-square)](https://www.npmjs.com/package/elite-longterm-memory)
+[![npm downloads](https://img.shields.io/npm/dm/elite-longterm-memory.svg?style=flat-square)](https://www.npmjs.com/package/elite-longterm-memory)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+
+---
+
+## Works With
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Claude-AI-orange?style=for-the-badge&logo=anthropic" alt="Claude AI" />
+  <img src="https://img.shields.io/badge/GPT-OpenAI-412991?style=for-the-badge&logo=openai" alt="GPT" />
+  <img src="https://img.shields.io/badge/Cursor-IDE-000000?style=for-the-badge" alt="Cursor" />
+  <img src="https://img.shields.io/badge/LangChain-Framework-1C3C3C?style=for-the-badge" alt="LangChain" />
+</p>
+
+<p align="center">
+  <strong>Built for:</strong> Clawdbot • Moltbot • Claude Code • Any AI Agent
+</p>
+
+---
+
 Combines 7 proven memory approaches into one bulletproof architecture:
 
 - ✅ **Bulletproof WAL Protocol** — Write-ahead logging survives compaction
